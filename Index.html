@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <link rel="stylesheet" href="Style.css">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="keywords" content="HTML CSS JS Dictionary" />
+    <meta name="description" content="Simple English Dictionary using HTML CSS JS and Dictionary API." />
+    <meta name="author" content="Soham Manjrekar" />
+    <link rel="stylesheet" type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
+ 
+</head>
+
+<body>
+    <div class="container-fluid mb-auto py-2 ">
+      <nav class="navbar navbar-expand-lg navbar-light bg-secondary bg-custom navbar-custom ">
+            <div class="container-fluid">
+              <a class="navbar-brand text-white" href="Index.html">Home</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="navbar-brand text-white" aria-current="page" href="contact.html">Contact</a>
+                  </li> 
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </li>
+                
+              </div>
+            </div>
+          </nav>
+          <div class="container-fluid h-100 d-flex align-items-center justify-content-center mt-3 mb-3">
+            <div class="Converter_UI my-6">
+                <h2>Convert <span>Temperature</span></h2>
+                <div class="fields">
+                    <div class="field">
+                        <input type="number" id="value" value="1" placeholder="Enter Value">
+                        <select id="firstValue">
+                            <option value="°C">Celcius</option>
+                            <option value="°F">Fahrenhiet</option>
+                            <option value="K">Kelvin</option>
+                        </select>
+                    </div>
+                    <div class="secondOne">
+                        <h2>To</h2>
+                        <select id="secondOne">
+                            <option value="°F">Fahrenhiet</option>
+                            <option value="K">Kelvin</option>
+                            <option value="°C">Celcius</option>
+                        </select>
+                    </div>
+                    <div class="btn">
+                        <button onclick="covertTemperature()">Convert</button>
+                    </div>
+                </div>
+                <div id="Answer">
+                    <div id="number"><span id="to">1°C</span> is <span style="font-style: italic;">equals</span> to</div>
+                    <div id="converted">33.8°F</div>
+                </div>
+            </div>
+          </div>
+      <div class="conatiner mt-3 mb-3">
+        <footer class="bg-light text-center text-lg-start my-6">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+              © 2020 Copyright:
+              <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+            </div>
+            <!-- Copyright -->
+          </footer>
+      </div>
+          
+    </div>
+   
+
+    <script>
+        let firstValue = document.getElementById("firstValue");
+        let secondOne = document.getElementById("secondOne");
+        let value = document.getElementById('value');
+
+        let from = "°C";
+        let to = "°F";
+        let number = "1"
+
+
+        firstValue.addEventListener("change",(value)=>{
+            from = value.target.value;
+        })
+        secondOne.addEventListener("change" , (value)=>{
+            to = value.target.value;
+        })
+        value.addEventListener("change",(field)=>{
+            number = field.target.value
+        })
+
+       
+        function covertTemperature() {
+            let pairMatrix = [
+                [
+                    "°C","°F", {
+                        operation: ()=>{
+                        let finalValue = parseFloat(number) * 9/5 + 32
+                        return `${number}${from} is equals to ${finalValue.toString().length < 9 ? finalValue :finalValue.toFixed(4)}${to}`
+                    }}
+                ],
+                [
+                    "°F","°C", {
+                        operation: ()=>{
+                            let finalValue = (parseFloat(number)-32) * 5/9
+                        return `${number}${from} is equals to ${finalValue.toString().length < 9 ? finalValue :finalValue.toFixed(4)}${to}`
+                    }}
+                ],
+                [
+                    "°C","K", {
+                        operation: ()=>{
+                        let finalValue = parseFloat(number)+273.15
+                        return `${number}${from} is equals to ${finalValue.toString().length < 9 ? finalValue :finalValue.toFixed(4)}${to}`
+                    }} 
+                ],
+                [
+                    "K","°C", {
+                        operation: ()=>{
+                        let finalValue = parseFloat(number) - 273.15
+                        return `${number}${from} is equals to ${finalValue.toString().length < 9 ? finalValue :finalValue.toFixed(4)}${to}`
+                    }} 
+                ],
+                [
+                    "K","°F", {
+                        operation: ()=>{
+                        let convertToCelcius = (parseInt(number) - 273.15) * 9/5 + 32;
+                        console.log(convertToCelcius);
+                        return `${number}${from} is equals to ${convertToCelcius.toString().length < 9 ? convertToCelcius : convertToCelcius.toFixed(4)}${to}`
+                    }} 
+                ],
+                [
+                    "°F","K",{
+                        operation: ()=>{
+                        
+                        let Celcius = (parseFloat(number)-32) * 5/9 + 273.15
+                        
+                       return `${number}${from} is equals to ${(Celcius.toString().length < 9 ? Celcius : Celcius.toFixed(4))}${to}`
+                    }}
+                ],
+                
+            ]
+            if (value !== "0") {
+                let value = document.getElementById("value").value;
+                for (const operation in pairMatrix) {
+                    if(pairMatrix[operation][0] == from && to == pairMatrix[operation][1]){
+                        console.log(`operation matched coverting ${from} to ${to}`);
+                        let response = pairMatrix[operation][2].operation();
+                      
+                        let indexOfAnswer = `${response}`.lastIndexOf("to") + 3;
+                        let answer = `${response}`.slice(indexOfAnswer,);
+                        document.getElementById("converted").innerText = answer
+
+                        let indexOfQuestion = `${response}`.lastIndexOf("is") - 1;
+                        let question = `${response}`.slice(0,indexOfQuestion)
+                        document.getElementById("to").innerText = question
+
+                    }else{
+                        if (from == to) {
+                            alert(`please change the operation, Can't convert ${from} to ${to}`)
+                        }
+                    }
+                }
+            }else{
+                alert("Please define a value!")
+              
+            }
+        }
+    </script>
+</body>
+
+</html>
